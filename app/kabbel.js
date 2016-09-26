@@ -7,84 +7,101 @@ module.exports = function (raids) {
     	this.msg = msg;
     }
 
-	module.listRaids = function() {
-		var res = yield dbRaids.find();
-		if (res.should.have.length()) {
-			var raidNames = '';
-			dbRaids.find({}, 'name').then((docs) => {
-				for (raidName in docs) {
-					raidNames += raidName+', '
-				}
-
-			})
-			return new kabbelResponse(true, 'Active raids: '+raidNames);
-		} else {
-			return new kabbelResponse(false, 'There are no raids');
-		}
+	module.listRaids = function(message) {
+		dbRaids.count({}, function(err, count) {
+			if (count) {
+				dbRaids.find({}, 'name').then((docs) => {
+					var raidNames = '';
+					docs.forEach(function(element, index){
+						raidNames += element.name;
+						raidNames += ', ';
+					});
+					message.reply('Active raids: '+raidNames);
+					//return new kabbelResponse(true, 'Active raids: '+raidNames);
+				});
+				
+			} else {
+				message.reply('There are no raids');
+			}
+		});
 	}
 
-	module.getRaidInfo = function(raidName) {
-		var res = yield dbRaids.findOne({name: raidName});
-		if (res.should.have.length(1)) {
-			dbRaids.findOne({name: raidName}).then((doc) => {
-				return new kabbelResponse(true, raidName+' signups: ');
-			});
-		} else {
-			return new kabbelResponse(false, 'There is no raid called '+raidName);
-		}
+	module.getRaidInfo = function(raidName, message) {
+		dbRaids.count({name: raidName}, function(err, count) {
+			if (count) {
+				dbRaids.findOne({name: raidName}).then((docs) => {
+					var raidNames = '';
+					docs.players.forEach(function(element, index){
+						raidNames += element;
+						raidNames += ', ';
+					});
+					message.reply(raidName+' signups: '+raidNames);
+				});
+				
+			} else {
+				message.reply('There is no raid called '+raidName);
+			}
+		});
 	}
 
-	module.unsignForRaid = function(raidName, actor) {
-		var res = yield dbRaids.findOne({name: raidName});
-		if (res.should.have.length(1)) {
-			dbRaids.update(
-				{name: raidName},
-				{ $pull: { players: { $in: [ actor ] } } }
-			);
-			return new kabbelResponse(true, actor+' is now removed from raid: '+raidName);
-		} else {
-			return new kabbelResponse(false, 'There is no raid called '+raidName);
-		}
+	module.unsignForRaid = function(raidName, actor, message) {
+		dbRaids.count({name: raidName}, function(err, count) {
+			if (count) {
+				dbRaids.update(
+					{name: raidName},
+					{ $pull: { players: { $in: [ actor ] } } }
+				);
+				message.reply(actor+' is now removed from raid: '+raidName);
+				
+			} else {
+				message.reply('There is no raid called '+raidName);
+			}
+		});
 	}
 
-	module.signUpForRaid = function(raidName, actor) {
-		var res = yield dbRaids.findOne({name: raidName});
-		if (res.should.have.length(1)) {
-			dbRaids.update(
-				{name: raidName},
-				{ $push: { players: actor } }
-			);
-			return new kabbelResponse(true, actor+' is now signed up for raid: '+raidName);
-		} else {
-			return new kabbelResponse(false, 'There is no raid called '+raidName);
-		}
+	module.signUpForRaid = function(raidName, actor, message) {
+		dbRaids.count({name: raidName}, function(err, count) {
+			if (count) {
+				dbRaids.update(
+					{name: raidName},
+					{ $push: { players: actor } }
+				);
+				message.reply(actor+' is now signed up for raid: '+raidName);
+				
+			} else {
+				message.reply('There is no raid called '+raidName);
+			}
+		});
 	}
 
-	module.removeRaid = function(raidName, actor) {
-		var res = yield dbRaids.findOne({name: raidName});
-		if (res.should.have.length(1)) {
-			dbRaids.remove({ 
-				name: raidName, 
-				creator: actor 
-			});
-			return new kabbelResponse(true, 'Removed the raid called: '+raidName);
-		} else {
-			return new kabbelResponse(false, 'There is no raid called '+raidName);
-		}
+	module.removeRaid = function(raidName, actor, message) {
+
+		dbRaids.count({name: raidName}, function(err, count) {
+			if (count) {
+				dbRaids.remove({ 
+					name: raidName, 
+					creator: actor 
+				});
+				message.reply('Removed the raid called: '+raidName);				
+			} else {
+				message.reply('There is no raid called '+raidName);
+			}
+		});
 	}
 
-	module.creatRaid = function(raidName, actor) {
-		var res = yield dbRaids.findOne({name: raidName});
-		if (res.should.have.length(1)) {
-			return new kabbelResponse(false, 'There is already a raid called '+raidName);
-		} else {
-			dbRaids.insert({ 
-				name: raidName, 
-				creator: actor,
-				players: []
-			});
-			return new kabbelResponse(true, 'Created a raid called: '+raidName);
-		}
+	module.creatRaid = function(raidName, actor, message) {
+		dbRaids.count({name: raidName}, function(err, count) {
+			if (!count) {
+				dbRaids.insert({ 
+					name: raidName, 
+					creator: actor,
+					players: []
+				});
+				message.reply('Created the raid called: '+raidName);				
+			} else {
+				message.reply('There is already a raid called '+raidName);
+			}
+		});
 	}
     return module;
 };
