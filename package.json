@@ -1,0 +1,23 @@
+{
+  "name": "kabbel",
+  "version": "1.0.0",
+  "description": "det ar bara kabbel",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccromnow/k-bbel.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "ccromnow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccromnow/k-bbel/issues"
+  },
+  "homepage": "https://github.com/ccromnow/k-bbel#readme"
+}
