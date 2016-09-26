@@ -7,8 +7,23 @@ module.exports = function (raids) {
     	this.msg = msg;
     }
 
+    var existsRaids = function(name) {
+    	var counts = 0;
+    	if (typeof name !== 'undefined') {
+    		dbRaids.count({name: name}, function (err, count) {
+    			counts = count;
+    		})
+    	} else {
+    		dbRaids.count({}, function (err, count) {
+    			counts = count;
+    		})
+    	}
+
+    	return counts;
+    }
+
 	module.listRaids = function() {
-		if (dbRaids.count({})) {
+		if (existsRaids()) {
 			var raidNames = '';
 			dbRaids.find({}, 'name').then((docs) => {
 				for (raidName in docs) {
@@ -23,7 +38,7 @@ module.exports = function (raids) {
 	}
 
 	module.getRaidInfo = function(raidName) {
-		if (dbRaids.count({name: raidName})) {
+		if (existsRaids(raidName)) {
 			dbRaids.findOne({name: raidName}).then((doc) => {
 				return new kabbelResponse(true, raidName+' signups: ');
 			});
@@ -33,7 +48,7 @@ module.exports = function (raids) {
 	}
 
 	module.unsignForRaid = function(raidName, actor) {
-		if (dbRaids.count({name: raidName})) {
+		if (existsRaids(raidName)) {
 			dbRaids.update(
 				{name: raidName},
 				{ $pull: { players: { $in: [ actor ] } } }
@@ -45,7 +60,7 @@ module.exports = function (raids) {
 	}
 
 	module.signUpForRaid = function(raidName, actor) {
-		if (dbRaids.count({name: raidName})) {
+		if (existsRaids(raidName)) {
 			dbRaids.update(
 				{name: raidName},
 				{ $push: { players: actor } }
@@ -57,7 +72,7 @@ module.exports = function (raids) {
 	}
 
 	module.removeRaid = function(raidName, actor) {
-		if (dbRaids.count({name: raidName})) {
+		if (existsRaids(raidName)) {
 			dbRaids.remove({ 
 				name: raidName, 
 				creator: actor 
@@ -69,7 +84,7 @@ module.exports = function (raids) {
 	}
 
 	module.creatRaid = function(raidName, actor) {
-		if (!dbRaids.count({name: raidName})) {
+		if (!existsRaids(raidName)) {
 			dbRaids.insert({ 
 				name: raidName, 
 				creator: actor,
