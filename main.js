@@ -13,8 +13,6 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
-	str.split(' ').length;
-
 	var msgContent = message.content;
 	var actorName = message.author.username;
 	var resp = false;
