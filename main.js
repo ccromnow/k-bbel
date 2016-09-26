@@ -2,6 +2,24 @@
 const token = 'MjI5ODc0NTcyMzY5OTg1NTM2.CsptOQ.6JAN2Y0YJLQM-07ffYAqPym54jU';
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const mongodb = require('mongodb');
+
+var MongoClient = mongodb.MongoClient;
+var url = process.env.MONGODB_URI;
+
+MongoClient.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    //HURRAY!! We are connected. :)
+    console.log('Connection established to', url);
+
+    // do some work here with the database.
+
+    //Close connection
+    db.close();
+  }
+});
 
 client.on('ready', () => {
   console.log('I am ready!');
