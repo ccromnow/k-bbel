@@ -4,7 +4,7 @@
   "description": "det ar bara kabbel",
   "main": "main.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
