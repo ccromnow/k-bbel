@@ -8,8 +8,14 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (message.content === 'ping') {
-    message.reply('pong');
+  if (message.content === 'Annie Lööf') {
+    message.reply('Det är bara käbbel');
+  }
+  if (message.content === 'klimatrapport') {
+    message.reply('jag har läst den där kanske flera gånger än vad du har...');
+  }
+  if (message.content === 'kaxiga jävel') {
+    message.reply('Robert är en sån kaxig jävel');
   }
 });
 
