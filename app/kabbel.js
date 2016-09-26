@@ -7,25 +7,9 @@ module.exports = function (raids) {
     	this.msg = msg;
     }
 
-    var existsRaids = function(name) {
-    	var counts = 0;
-    	if (typeof name == "string") {
-    		counts = yield dbRaids.count({name: name}, function (err, count) {
-    			return count;
-    		});
-    	} else {
-    		counts = yield dbRaids.count({}, function (err, count) {
-    			return count;
-    		});
-    	}
-
-    	console.log(counts);
-
-    	return counts;
-    }
-
 	module.listRaids = function() {
-		if (existsRaids()) {
+		var res = yield dbRaids.find();
+		if (res.should.have.length()) {
 			var raidNames = '';
 			dbRaids.find({}, 'name').then((docs) => {
 				for (raidName in docs) {
@@ -40,7 +24,8 @@ module.exports = function (raids) {
 	}
 
 	module.getRaidInfo = function(raidName) {
-		if (existsRaids(raidName)) {
+		var res = yield dbRaids.findOne({name: raidName});
+		if (res.should.have.length(1)) {
 			dbRaids.findOne({name: raidName}).then((doc) => {
 				return new kabbelResponse(true, raidName+' signups: ');
 			});
@@ -50,7 +35,8 @@ module.exports = function (raids) {
 	}
 
 	module.unsignForRaid = function(raidName, actor) {
-		if (existsRaids(raidName)) {
+		var res = yield dbRaids.findOne({name: raidName});
+		if (res.should.have.length(1)) {
 			dbRaids.update(
 				{name: raidName},
 				{ $pull: { players: { $in: [ actor ] } } }
@@ -62,7 +48,8 @@ module.exports = function (raids) {
 	}
 
 	module.signUpForRaid = function(raidName, actor) {
-		if (existsRaids(raidName)) {
+		var res = yield dbRaids.findOne({name: raidName});
+		if (res.should.have.length(1)) {
 			dbRaids.update(
 				{name: raidName},
 				{ $push: { players: actor } }
@@ -74,7 +61,8 @@ module.exports = function (raids) {
 	}
 
 	module.removeRaid = function(raidName, actor) {
-		if (existsRaids(raidName)) {
+		var res = yield dbRaids.findOne({name: raidName});
+		if (res.should.have.length(1)) {
 			dbRaids.remove({ 
 				name: raidName, 
 				creator: actor 
@@ -86,15 +74,16 @@ module.exports = function (raids) {
 	}
 
 	module.creatRaid = function(raidName, actor) {
-		if (!existsRaids(raidName)) {
+		var res = yield dbRaids.findOne({name: raidName});
+		if (res.should.have.length(1)) {
+			return new kabbelResponse(false, 'There is already a raid called '+raidName);
+		} else {
 			dbRaids.insert({ 
 				name: raidName, 
 				creator: actor,
 				players: []
 			});
 			return new kabbelResponse(true, 'Created a raid called: '+raidName);
-		} else {
-			return new kabbelResponse(false, 'There is already a raid called '+raidName);
 		}
 	}
     return module;

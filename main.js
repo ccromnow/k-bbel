@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongodb = require('mongodb');
 const db = require('monk')(process.env.MONGODB_URI);
-const raids = db.get('raids');
+const wrap = require('co-monk');
+const raids = users = wrap(db.get('raids'));
 const Kabbel = require("./app/kabbel.js")(raids);
 
 client.on('ready', () => {
