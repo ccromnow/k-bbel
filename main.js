@@ -8,19 +8,48 @@ const raids = db.get('raids');
 const Kabbel = require("./app/kabbel.js")(raids);
 
 client.on('ready', () => {
-  console.log('I am ready!');
+
 });
 
 client.on('message', message => {
-  if (message.content === 'Annie Lööf') {
-    message.reply('Det är bara käbbel');
-  }
-  if (message.content === 'klimatrapport') {
-    message.reply('jag har läst den där kanske flera gånger än vad du har...');
-  }
-  if (message.content === 'kaxiga jävel') {
-    message.reply('Robert är en sån kaxig jävel');
-  }
+
+	str.split(' ').length;
+
+	var msgContent = message.content;
+	var actorName = message.author.username;
+	var resp = false;
+
+	if (msgContent.split(' ').length === 3) {
+		var raidName = msgContent.split(' ')[2];
+
+		if (msgContent.indexOf('create raid') !== -1) {
+			resp = Kabbel.creatRaid(raidName, actorName);
+		}
+
+		if (msgContent.indexOf('remove raid') !== -1) {
+			resp = Kabbel.removeRaid(raidName, actorName);
+		}
+
+		if (msgContent.indexOf('signup raid') !== -1) {
+			resp = Kabbel.signUpForRaid(raidName, actorName);
+		}
+
+		if (msgContent.indexOf('unsign raid') !== -1) {
+			resp = Kabbel.unsignForRaid(raidName, actorName);
+		}
+
+		if (msgContent.indexOf('info raid') !== -1) {
+			resp = Kabbel.unsignForRaid(raidName);
+		}
+
+		if (msgContent.indexOf('list all raids') !== -1) {
+			resp = Kabbel.listRaids();
+		}
+	}
+
+	if (resp) {
+		message.reply(resp.msg);
+	}
 });
 
 client.login(token);
