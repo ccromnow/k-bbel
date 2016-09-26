@@ -62,7 +62,7 @@ module.exports = function (raids) {
 				name: raidName, 
 				creator: actor 
 			});
-			return new kabbelResponse(true, 'Created a raid called: '+raidName);
+			return new kabbelResponse(true, 'Removed the raid called: '+raidName);
 		} else {
 			return new kabbelResponse(false, 'There is no raid called '+raidName);
 		}

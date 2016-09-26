@@ -37,7 +37,7 @@ client.on('message', message => {
 		}
 
 		if (msgContent.indexOf('info raid') !== -1) {
-			resp = Kabbel.unsignForRaid(raidName);
+			resp = Kabbel.getRaidInfo(raidName);
 		}
 
 		if (msgContent.indexOf('list all raids') !== -1) {
