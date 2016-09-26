@@ -1,35 +1,29 @@
-const db = require('monk')(process.env.MONGODB_URI);
-const raids = db.get('raids')
+module.exports = function (raids) {
+    var module = {};
+    var dbRaids = raids;
+    
+	module.listRaids = function() {
 
-(function() {
-    var Kabbel = function() 
-    {
-    	this.listRaids = function() {
+	}
 
-    	}
+	module.getRaidInfo = function(raidName) {
 
-    	this.getRaidInfo = function(raidName) {
+	}
 
-    	}
+	module.unsignForRaid = function(raidName, actor) {
 
-    	this.unsignForRaid = function(raidName, actor) {
+	}
 
-    	}
+	module.signUpForRaid = function(raidName, actor) {
 
-    	this.signUpForRaid = function(raidName, actor) {
+	}
 
-    	}
+	module.removeRaid = function(raidName, actor) {
 
-    	this.removeRaid = function(raidName, actor) {
+	}
 
-    	}
+	module.creatRaid = function(raidName, actor) {
 
-    	this.creatRaid = function(raidName, actor) {
-
-    	}
-    }
-
-    module.exports.getKabbel = function() {
-        return Kabbel();
-    }
-}());
+	}
+    return module;
+};
