@@ -9,15 +9,17 @@ module.exports = function (raids) {
 
     var existsRaids = function(name) {
     	var counts = 0;
-    	if (typeof name !== 'undefined') {
-    		dbRaids.count({name: name}, function (err, count) {
-    			counts = count;
-    		})
+    	if (typeof name == "string") {
+    		counts = dbRaids.count({name: name}, function (err, count) {
+    			return count;
+    		});
     	} else {
-    		dbRaids.count({}, function (err, count) {
-    			counts = count;
-    		})
+    		counts = dbRaids.count({}, function (err, count) {
+    			return count;
+    		});
     	}
+
+    	console.log(counts);
 
     	return counts;
     }
