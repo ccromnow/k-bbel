@@ -10,11 +10,11 @@ module.exports = function (raids) {
     var existsRaids = function(name) {
     	var counts = 0;
     	if (typeof name == "string") {
-    		counts = dbRaids.count({name: name}, function (err, count) {
+    		counts = yield dbRaids.count({name: name}, function (err, count) {
     			return count;
     		});
     	} else {
-    		counts = dbRaids.count({}, function (err, count) {
+    		counts = yield dbRaids.count({}, function (err, count) {
     			return count;
     		});
     	}
