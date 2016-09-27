@@ -3,8 +3,7 @@ const token = 'MjI5ODc0NTcyMzY5OTg1NTM2.CsptOQ.6JAN2Y0YJLQM-07ffYAqPym54jU';
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongodb = require('mongodb');
-//const db = require('monk')(process.env.MONGODB_URI);
-const db = require('monk')('mongodb://heroku_wpdz8n14:ig7kuut3josfhqnmf08mmfi6hs@ds035036.mlab.com:35036/heroku_wpdz8n14');
+const db = require('monk')(process.env.MONGODB_URI);
 const raids = db.get('raids');
 const Kabbel = require("./app/kabbel.js")(raids);
 
