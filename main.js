@@ -19,43 +19,12 @@ client.on('message', message => {
 	if (msgContent[0] == '!') {
 		var command = msgContent.split(' ')[0];
 		if (Kabbel.isACommand(command)) {
-
 			Kabbel.runMessage(msgContent, message);
 		}
 	}
-	/*
-	if (msgContent.split(' ').length === 3) {
-		var raidName = msgContent.split(' ')[2];
-
-		if (msgContent.indexOf('create raid') !== -1) {
-			Kabbel.creatRaid(raidName, actorName, message);
-		}
-
-		if (msgContent.indexOf('remove raid') !== -1) {
-			Kabbel.removeRaid(raidName, actorName, message);
-		}
-
-		if (msgContent.indexOf('signup raid') !== -1) {
-			Kabbel.signUpForRaid(raidName, actorName, message);
-		}
-
-		if (msgContent.indexOf('unsign raid') !== -1) {
-			Kabbel.unsignForRaid(raidName, actorName, message);
-		}
-
-		if (msgContent.indexOf('info raid') !== -1) {
-			Kabbel.getRaidInfo(raidName, message);
-		}
-
-		if (msgContent.indexOf('list all raids') !== -1) {
-			Kabbel.listRaids(message);
-		}
-	}*/
 });
 
 client.login(token);
-
-
 
 var express = require('express');
 var app = express();

@@ -1,4 +1,4 @@
-const GameLookup = require("./app/command/GameLookup.js");
+const GameLookup = require("./command/GameLookup.js");
 
 module.exports = function (storage) {
     var module = {};
