@@ -17,19 +17,24 @@ module.exports = function () {
     	var release = '';
     	for (var i = 0; i < data[0].release_dates.length; i++) {
     		
+    		var found = false;
     		var datum = moment(data[0].release_dates[i].date);
 
     		if (data[0].release_dates[i].region == 8) {
-    			release += 'And is released world wide on ';
-    			relesee += datum.format('LLLL');
-    			relesee += '('+datum.fromNow()+').';
-    			break;
+    			release += ' And is released world wide on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
+    			found = true;
     		}
     		if (data[0].release_dates[i].region == 1) {
-    			release += 'And is released in Europe on ';
-    			relesee += datum.format('LLLL');
-    			relesee += '('+datum.fromNow()+').';
-    			break;
+    			release += ' And is released in Europe on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
+    			found true;
+    		}
+
+    		if (found && data[0].release_dates[i].platform == 6) {
+    			release += ' (ON PC)';
+    		}
+
+    		if (found && data[0].release_dates[i].platform == 14) {
+    			release += ' (ON MAC)';
     		}
     	}
 
