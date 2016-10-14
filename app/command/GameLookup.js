@@ -19,13 +19,14 @@ module.exports = function () {
     		
     		var found = false;
     		var datum = moment(data[0].release_dates[i].date);
+    		var past = (datum.isBefore(moment())) ? 'was' : 'is';
 
     		if (data[0].release_dates[i].region == 8) {
-    			release += ' And is released world wide on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
+    			release += ' And '+past+' released world wide on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
     			found = true;
     		}
     		if (data[0].release_dates[i].region == 1) {
-    			release += ' And is released in Europe on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
+    			release += ' And '+past+' released in Europe on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
     			found = true;
     		}
 
