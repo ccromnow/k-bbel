@@ -1,13 +1,11 @@
 const GameLookup = require("./command/GameLookup.js");
-const GameLookup2 = require("./command/GameLookup.js")();
 
 module.exports = function (storage) {
     var module = {};
     var dbRaids = storage;
-    var commands = ['!gameinfo'];
-
-    console.log(GameLookup);
-    console.log(GameLookup2);
+    var commands = [
+    	'!gameinfo' => new GameLookup()
+    ];
 
 	module.isACommand = function(command) {
 		return commands.indexOf(command) !== -1;
@@ -17,10 +15,7 @@ module.exports = function (storage) {
 		var commandType = command.split(' ')[0];
 		var commandQuery = command.split(' ').slice(1).join(' ');
 
-		if (commandType == '!gameinfo') {
-			GameLookup.run(commandQuery, callback);
-			GameLookup2.run(commandQuery, callback);
-		}		
+		commands[commandType].run(commandQuery, callback);
 	}
 
     return module;
