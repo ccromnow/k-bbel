@@ -4,7 +4,7 @@ module.exports = function () {
 	var moment = require('moment');
     
     var handleRespone = function(response, message) {
-    	if (response.status == 200) {
+    	if (response.status == 200 && response.body.length) {
     		return buildUserResponse(response.body)
     	} else {
     		return 'Kunde inte hitta '+message;
