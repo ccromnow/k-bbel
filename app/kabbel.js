@@ -12,8 +12,11 @@ module.exports = function (storage) {
 	}
 
 	module.runCommand = function(command, callback) {
-		var commandType = command.split(' ')[0].slice(1);
+		var commandType = command.split(' ')[0];
 		var commandQuery = command.split(' ').slice(1);
+
+		console.log(commandType);
+		console.log(commandQuery);
 
 		return commands[commandType].run(commandQuery, callback);
 	}
