@@ -42,7 +42,7 @@ module.exports = function () {
     }
 
 	module.run = function(message, callback) {
-		unirest.get("https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=*&limit=3&offset=0&order=release_dates.date%3Adesc&search=zelda")
+		unirest.get("https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=*&limit=3&offset=0&order=release_dates.date%3Adesc&search="+message)
 		.header("X-Mashape-Key", process.env.MASHAPE_KEY)
 		.header("Accept", "application/json")
 		.end(function (result) {
