@@ -5,20 +5,17 @@ module.exports = function (storage) {
     var dbRaids = storage;
     var commands = ['!gameinfo'];
 
-    commands['!gameinfo'] = GameLookup;
-
 	module.isACommand = function(command) {
 		return commands[command] !== undefined;
 	}
 
 	module.runCommand = function(command, callback) {
 		var commandType = command.split(' ')[0];
-		var commandQuery = command.split(' ').slice(1);
+		var commandQuery = command.split(' ').slice(1).join(' ');
 
-		console.log(commandType);
-		console.log(commandQuery);
-
-		return commands[commandType].run(commandQuery, callback);
+		if (commandType == '!gameinfo') {
+			return GameLookup.run(commandQuery, callback);
+		}		
 	}
 
     return module;

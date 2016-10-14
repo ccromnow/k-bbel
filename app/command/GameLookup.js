@@ -1,8 +1,8 @@
 module.exports = function () {
+	var module = {};
 	var unirest = require('unirest');
 	var moment = require('moment');
-    var module = {};
-
+    
     var handleRespone = function(response, message) {
     	if (response.status == 200) {
     		return buildUserResponse(response.body)
