@@ -4,7 +4,9 @@ module.exports = function () {
 	var moment = require('moment');
     
     var handleRespone = function(response, message) {
+    	console.log('!lookup: Response status '+response.status);
     	if (response.status == 200) {
+    		console.log('!lookup: Building response message');
     		return buildUserResponse(response.body)
     	} else {
     		return 'Kunde inte hitta '+message;
@@ -14,7 +16,9 @@ module.exports = function () {
     var buildUserResponse = function(data) {
     	var release = '';
     	for (var i = 0; i < data[0].release_dates.length; i++) {
+    		
     		var datum = moment(data[0].release_dates[i].date);
+
     		if (data[0].release_dates[i].region == 8) {
     			release += 'And is released world wide on ';
     			relesee += datum.format('LLLL');
@@ -37,8 +41,10 @@ module.exports = function () {
 		.header("X-Mashape-Key", process.env.MASHAPE_KEY)
 		.header("Accept", "application/json")
 		.end(function (result) {
+			console.log('!lookup: Got reslut back');
 			callback.reply(handleRespone(result, message));
 		});
+		console.log('!lookup: Ran command');
 	}
 
     return module;
