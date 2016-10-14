@@ -6,7 +6,7 @@ module.exports = function (storage) {
     var commands = ['!gameinfo'];
 
 	module.isACommand = function(command) {
-		return commands[command] !== undefined;
+		return commands[command].indexOf(command) !== -1;
 	}
 
 	module.runCommand = function(command, callback) {
