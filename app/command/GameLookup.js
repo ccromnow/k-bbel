@@ -26,7 +26,7 @@ module.exports = function () {
     		}
     		if (data[0].release_dates[i].region == 1) {
     			release += ' And is released in Europe on '+datum.format('LLLL')+' ('+datum.fromNow()+').';
-    			found true;
+    			found = true;
     		}
 
     		if (found && data[0].release_dates[i].platform == 6) {
