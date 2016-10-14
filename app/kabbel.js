@@ -3,9 +3,9 @@ const GameLookup = require("./command/GameLookup.js");
 module.exports = function (storage) {
     var module = {};
     var dbRaids = storage;
-    var commands = [
-    	'!gameinfo' => new GameLookup()
-    ];
+    var commands = ['!gameinfo'];
+
+    commands['!gameinfo'] = new GameLookup();
 
 	module.isACommand = function(command) {
 		return commands.indexOf(command) !== -1;
