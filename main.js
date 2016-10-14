@@ -1,5 +1,5 @@
 // the token of your bot - https://discordapp.com/developers/applications/me
-const token = 'MjI5ODc0NTcyMzY5OTg1NTM2.CsptOQ.6JAN2Y0YJLQM-07ffYAqPym54jU';
+const token = process.env.DISCORD_TOKEN;
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongodb = require('mongodb');
@@ -15,35 +15,42 @@ client.on('message', message => {
 
 	var msgContent = message.content;
 	var actorName = message.author.username;
-	var resp = false;
 
+	if (msgContent[0] == '!') {
+		var command = msgContent.split(' ')[0];
+		if (Kabbel.isACommand(command)) {
+
+			Kabbel.runMessage(msgContent, message);
+		}
+	}
+	/*
 	if (msgContent.split(' ').length === 3) {
 		var raidName = msgContent.split(' ')[2];
 
 		if (msgContent.indexOf('create raid') !== -1) {
-			resp = Kabbel.creatRaid(raidName, actorName, message);
+			Kabbel.creatRaid(raidName, actorName, message);
 		}
 
 		if (msgContent.indexOf('remove raid') !== -1) {
-			resp = Kabbel.removeRaid(raidName, actorName, message);
+			Kabbel.removeRaid(raidName, actorName, message);
 		}
 
 		if (msgContent.indexOf('signup raid') !== -1) {
-			resp = Kabbel.signUpForRaid(raidName, actorName, message);
+			Kabbel.signUpForRaid(raidName, actorName, message);
 		}
 
 		if (msgContent.indexOf('unsign raid') !== -1) {
-			resp = Kabbel.unsignForRaid(raidName, actorName, message);
+			Kabbel.unsignForRaid(raidName, actorName, message);
 		}
 
 		if (msgContent.indexOf('info raid') !== -1) {
-			resp = Kabbel.getRaidInfo(raidName, message);
+			Kabbel.getRaidInfo(raidName, message);
 		}
 
 		if (msgContent.indexOf('list all raids') !== -1) {
-			resp = Kabbel.listRaids(message);
+			Kabbel.listRaids(message);
 		}
-	}
+	}*/
 });
 
 client.login(token);
