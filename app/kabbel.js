@@ -1,5 +1,5 @@
 const GameLookup = require("./command/GameLookup.js");
-const Kaxig = require("./command/GameLookup.js");
+const Kaxig = require("./command/Kaxig.js");
 
 module.exports = function (storage) {
     var module = {};
