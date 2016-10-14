@@ -19,12 +19,21 @@ client.on('message', message => {
 	if (msgContent[0] == '!') {
 		var command = msgContent.split(' ')[0];
 		if (Kabbel.isACommand(command)) {
-			Kabbel.runMessage(msgContent, message);
+			Kabbel.runCommand(msgContent, message);
 		}
 	}
 });
 
 client.login(token);
+
+
+
+
+/**
+	
+	Info page.
+
+*/
 
 var express = require('express');
 var app = express();
