@@ -1,11 +1,13 @@
 const GameLookup = require("./command/GameLookup.js");
+const Kaxig = require("./command/GameLookup.js");
 
 module.exports = function (storage) {
     var module = {};
     var dbRaids = storage;
-    var commands = ['!gameinfo'];
+    var commands = ['!gameinfo', '!kaxig'];
 
     commands['!gameinfo'] = new GameLookup();
+    commands['!kaxig'] = new Kaxig();
 
 	module.isACommand = function(command) {
 		return commands.indexOf(command) !== -1;
