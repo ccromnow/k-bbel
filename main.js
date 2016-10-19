@@ -3,6 +3,9 @@ const token = process.env.DISCORD_TOKEN;
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Kabbel = require("./app/kabbel.js")();
+const Command = require("./app/command.js");
+const Q = require('q');
+
 
 client.on('ready', () => {
 
@@ -10,12 +13,14 @@ client.on('ready', () => {
 
 client.on('message', message => {
 	var msgContent = message.content;
-	var actorName = message.author.username;
-
 	if (msgContent[0] == '!') {
-		var command = msgContent.split(' ')[0];
-		if (Kabbel.isACommand(command)) {
-			Kabbel.runCommand(msgContent, message);
+		
+		var commandType = msgContent.split(' ')[0];
+		var commandQuery = msgContent.split(' ').slice(1).join(' ');
+
+		if (Kabbel.isACommand(commandType)) {
+			var command = new Command(commandType, commandQuery, message);
+			Kabbel.runCommand(command);
 		}
 	}
 });

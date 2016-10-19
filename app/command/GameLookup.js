@@ -1,4 +1,4 @@
-module.exports = function *() {
+module.exports = function() {
 	var module = {};
 	var unirest = require('unirest');
 	var moment = require('moment');
@@ -46,7 +46,7 @@ module.exports = function *() {
     	return 'The game: '+data[0].name+'. '+release;
     }
 
-	module.run = function *(message, callback) {
+	module.run = function *(message) {
 		
 		var query = {
 			fields: '*',
@@ -60,7 +60,7 @@ module.exports = function *() {
 		.header("X-Mashape-Key", process.env.MASHAPE_KEY)
 		.header("Accept", "application/json")
 		.end(function (result) {
-			callback.reply(handleRespone(result, message));
+			return handleRespone(result, message);
 		});
 	}
 
