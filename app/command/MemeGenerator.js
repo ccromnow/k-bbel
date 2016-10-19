@@ -1,7 +1,7 @@
 const unirest = require('unirest');
 const sleep = require('co-sleep');
 
-pollForResult = function(url, attempt, callback) {
+const pollForResult = function(url, attempt, callback) {
 	attempt = attempt || 1;
 	
 	if (attempt > 10) {
