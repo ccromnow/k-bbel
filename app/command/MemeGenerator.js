@@ -140,6 +140,9 @@ module.exports = function () {
 			.header({'Accept': 'application/json', 'Content-Type': 'application/json'})
 			.send(requestBody)
 			.end(function (result) {
+				
+				console.log(result);
+
 				if (result.status == 200) {
 					callback.reply(response.body);
 				} else {
