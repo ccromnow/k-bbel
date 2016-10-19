@@ -141,7 +141,7 @@ module.exports = function () {
 			.send(requestBody)
 			.end(function (result) {
 				if (result.status == 202) {
-					if (typeof response.body.status_url !== 'undefined') {
+					if (typeof result.body.status_url !== 'undefined') {
 						callback.reply(response.body.status_url);
 					} else {
 						callback.reply("deeerp!");
