@@ -2,6 +2,7 @@ module.exports = function () {
 	var module = {};
 	var unirest = require('unirest');
 	var moment = require('moment');
+	var sleep = require('co-sleep');
 	var querystring = require('querystring');
 	var memecaptain = "http://memecaptain.com/gend_images";
 
