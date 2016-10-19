@@ -140,11 +140,12 @@ module.exports = function () {
 			.header({'Accept': 'application/json', 'Content-Type': 'application/json'})
 			.send(requestBody)
 			.end(function (result) {
-				
-				console.log(result);
-
-				if (result.status == 200) {
-					callback.reply(response.body);
+				if (result.status == 202) {
+					if (typeof response.body.status_url !== 'undefined') {
+						callback.reply(response.body.status_url);
+					} else {
+						callback.reply("deeerp!");
+					}
 				} else {
 					callback.reply("wubba lubba dub dub!");
 				}
