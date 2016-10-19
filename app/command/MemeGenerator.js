@@ -1,8 +1,27 @@
+const unirest = require('unirest');
+const sleep = require('co-sleep');
+
+pollForResult = function(url, attempt, callback) {
+	attempt = attempt || 1;
+	
+	if (attempt > 10) {
+		return null;
+	}
+
+	unirest.get(url).end(function (result) {
+		if (result.status == 303) {
+			callback.reply(result.headers.location);
+		} else if (result.status == 200) {
+			var nextAttemptDelay = 250 * attempt;
+			sleep(nextAttemptDelay);
+			return pollForResult(url, attempt + 1, callback);
+		}
+	});
+}
+
 module.exports = function () {
 	var module = {};
-	var unirest = require('unirest');
 	var moment = require('moment');
-	var sleep = require('co-sleep');
 	var querystring = require('querystring');
 	var memecaptain = "http://memecaptain.com/gend_images";
 
@@ -219,24 +238,6 @@ module.exports = function () {
 		}
 	}
 
-	function pullForResult(url, attempt, callback) {
-		attempt = attempt || 1;
-		
-		if (attempt > 10) {
-			return null;
-		}
-
-		unirest.get(url).end(function (result) {
-			if (result.status == 303) {
-				callback.reply(result.headers.location);
-			} else if (result.status == 200) {
-				var nextAttemptDelay = 250 * attempt;
-				sleep(nextAttemptDelay);
-				return pollForResult(url, attempt + 1, callback);
-			}
-		});
-	}
-    
 	module.run = function(message, callback) {
 		var requestBody = buildMemeRequestBody(message);
 		if (requestBody) {
