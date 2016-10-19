@@ -1,24 +1,6 @@
 const unirest = require('unirest');
 const sleep = require('co-sleep');
 
-const pollForResult = function(url, attempt, callback) {
-	attempt = attempt || 1;
-	
-	if (attempt > 10) {
-		return null;
-	}
-
-	unirest.get(url).end(function (result) {
-		if (result.status == 303) {
-			callback.reply(result.headers.location);
-		} else if (result.status == 200) {
-			var nextAttemptDelay = 250 * attempt;
-			sleep(nextAttemptDelay);
-			return pollForResult(url, attempt + 1, callback);
-		}
-	});
-}
-
 module.exports = function () {
 	var module = {};
 	var moment = require('moment');
@@ -236,6 +218,24 @@ module.exports = function () {
 		} else {
 			return false;
 		}
+	}
+
+	pullForResult = function(url, attempt, callback) {
+		attempt = attempt || 1;
+		
+		if (attempt > 10) {
+			return null;
+		}
+
+		unirest.get(url).end(function (result) {
+			if (result.status == 303) {
+				callback.reply(result.headers.location);
+			} else if (result.status == 200) {
+				var nextAttemptDelay = 250 * attempt;
+				sleep(nextAttemptDelay);
+				return pullForResult(url, attempt + 1, callback);
+			}
+		});
 	}
 
 	module.run = function(message, callback) {
