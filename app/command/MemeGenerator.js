@@ -229,7 +229,7 @@ module.exports = function () {
 
 		unirest.get(url).followRedirect(false).end(function (result) {
 
-			console.log(reslut);
+			console.log(result);
 
 			if (result.status == 303) {
 				callback.reply(result.headers.location);
