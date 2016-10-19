@@ -137,7 +137,7 @@ module.exports = function () {
 		var requestBody = buildMemeRequestBody(message);
 		if (requestBody) {
 			unirest.post(memecaptain)
-			.header("Accept", "application/json", 'Content-Type': 'application/json')
+			.header({'Accept': 'application/json', 'Content-Type': 'application/json'})
 			.send(requestBody)
 			.end(function (result) {
 				if (result.status == 200) {
