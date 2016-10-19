@@ -174,13 +174,13 @@ module.exports = function () {
 		}
 	];
 
-	var setMemeParameters = function(url, text1, text2) {
+	function setMemeParameters(url, text1, text2) {
 		label1 = (text1 || '').trim();
 		label2 = (text2 || '').trim();
 		memeUrl = url;
 	}
 
-	var buildMemeRequestBody = function(query) {
+	function buildMemeRequestBody(query) {
 		var match;
 		var text;
 
@@ -219,7 +219,7 @@ module.exports = function () {
 		}
 	}
 
-	var pullForResult = function(url, attempt, callback) {
+	function pullForResult(url, attempt, callback) {
 		attempt = attempt || 1;
 		
 		if (attempt > 10) {
