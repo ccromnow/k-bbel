@@ -1,10 +1,6 @@
 module.exports = function() {
 	var unirest = require('unirest');
-	var sleep = require('co-sleep');
-	var co = require('co');
 	var module = {};
-	var moment = require('moment');
-	var querystring = require('querystring');
 	var memecaptain = "http://memecaptain.com/gend_images";
 	var userCommand = null;
 

@@ -4,7 +4,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const Kabbel = require("./app/kabbel.js")();
 const Command = require("./app/command.js");
-const Q = require('q');
 
 
 client.on('ready', () => {

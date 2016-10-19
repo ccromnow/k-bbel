@@ -21,9 +21,6 @@
   },
   "homepage": "https://github.com/ccromnow/k-bbel#readme",
   "dependencies": {
-    "Q": "0.0.1",
-    "co": "^4.6.0",
-    "co-sleep": "0.0.1",
     "discord.js": "^9.3.0",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
