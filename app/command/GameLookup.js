@@ -2,6 +2,8 @@ module.exports = function () {
 	var module = {};
 	var unirest = require('unirest');
 	var moment = require('moment');
+	var querystring = require('querystring');
+	var igdbUrl = "https://igdbcom-internet-game-database-v1.p.mashape.com/games/"
     
     var handleRespone = function(response, message) {
     	if (response.status == 200 && response.body.length) {
@@ -45,7 +47,16 @@ module.exports = function () {
     }
 
 	module.run = function(message, callback) {
-		unirest.get("https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=*&limit=3&offset=0&order=release_dates.date%3Adesc&search="+message)
+		
+		var query = {
+			fields: '*',
+			limit: 3,
+			offset: 0,
+			order: 'release_dates.date%3Adesc',
+			search: message
+		};
+
+		unirest.get(igdbUrl + querystring.stringify(query))
 		.header("X-Mashape-Key", process.env.MASHAPE_KEY)
 		.header("Accept", "application/json")
 		.end(function (result) {

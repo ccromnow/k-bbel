@@ -1,13 +1,15 @@
 const GameLookup = require("./command/GameLookup.js");
 const Kaxig = require("./command/Kaxig.js");
+const Meme = require("./command/MemeGenerator.js");
 
 module.exports = function (storage) {
     var module = {};
     var dbRaids = storage;
-    var commands = ['!gameinfo', '!kaxig'];
+    var commands = ['!gameinfo', '!kaxig', '!meme'];
 
     commands['!gameinfo'] = new GameLookup();
     commands['!kaxig'] = new Kaxig();
+    commands['!meme'] = new Meme();
 
 	module.isACommand = function(command) {
 		return commands.indexOf(command) !== -1;
