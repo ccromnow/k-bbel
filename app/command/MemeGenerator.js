@@ -1,7 +1,7 @@
-const unirest = require('unirest');
-const sleep = require('co-sleep');
-
-module.exports = function () {
+module.exports = function *() {
+	var unirest = require('unirest');
+	var sleep = require('co-sleep');
+	var co = require('co');
 	var module = {};
 	var moment = require('moment');
 	var querystring = require('querystring');
@@ -183,7 +183,7 @@ module.exports = function () {
 		}
 	}
 
-	function buildMemeRequestBody(query) {
+	function *buildMemeRequestBody(query) {
 		var match;
 		var text;
 
@@ -222,32 +222,34 @@ module.exports = function () {
 		}
 	}
 
-	function *pullForResult (url, attempt, callback) {
-		attempt = attempt || 1;
+	function *pullForResult(url, attempt, callback) {
+		return function *() {
+			attempt = attempt || 1;
 		
-		if (attempt > 10) {
-			return null;
-		}
-
-		unirest.get(url).followRedirect(false).end(function (result) {
-			if (result.statusCode == 303) {
-				callback.reply(result.headers.location);
-				return;
-			} else if (result.statusCode == 200) {
-				var nextAttemptDelay = 250 * attempt;
-				yield sleep(nextAttemptDelay);
-				return yield pullForResult(url, attempt + 1, callback);
+			if (attempt > 10) {
+				return null;
 			}
-		});
+
+			unirest.get(url).followRedirect(false).end(function *(result) {
+				if (result.statusCode == 303) {
+					callback.reply(result.headers.location);
+					return;
+				} else if (result.statusCode == 200) {
+					var nextAttemptDelay = 250 * attempt;
+					yield sleep(nextAttemptDelay);
+					return yield pullForResult(url, attempt + 1, callback);
+				}
+			});
+		}
 	}
 
-	module.run = function(message, callback) {
-		var requestBody = buildMemeRequestBody(message);
+	module.run = function *(message, callback) {
+		var requestBody = yield buildMemeRequestBody(message);
 		if (requestBody) {
 			unirest.post(memecaptain)
 			.header({'Accept': 'application/json', 'Content-Type': 'application/json'})
 			.send(requestBody)
-			.end(function (result) {
+			.end(function *(result) {
 				if (result.status == 202) {
 					if (typeof result.headers.location !== 'undefined') {
 						yield pullForResult(result.headers.location, 0, callback)

@@ -1,7 +1,7 @@
-module.exports = function () {
+module.exports = function *() {
 	var module = {};
 
-	module.run = function(message, callback) {
+	module.run = function *(message, callback) {
 		callback.reply('Robert är en kaxig jävel...');
 	}
 

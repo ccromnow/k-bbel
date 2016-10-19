@@ -2,17 +2,13 @@
 const token = process.env.DISCORD_TOKEN;
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const mongodb = require('mongodb');
-const db = require('monk')(process.env.MONGODB_URI);
-const raids = db.get('raids');
-const Kabbel = require("./app/kabbel.js")(raids);
+const Kabbel = require("./app/kabbel.js")();
 
 client.on('ready', () => {
 
 });
 
 client.on('message', message => {
-
 	var msgContent = message.content;
 	var actorName = message.author.username;
 
