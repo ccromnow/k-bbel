@@ -227,7 +227,10 @@ module.exports = function () {
 			return null;
 		}
 
-		unirest.get(url).end(function (result) {
+		unirest.get(url).followRedirect(false).end(function (result) {
+
+			console.log(reslut);
+
 			if (result.status == 303) {
 				callback.reply(result.headers.location);
 			} else if (result.status == 200) {
@@ -247,6 +250,7 @@ module.exports = function () {
 			.end(function (result) {
 				if (result.status == 202) {
 					if (typeof result.headers.location !== 'undefined') {
+						console.log(result.headers.location);
 						pullForResult(result.headers.location, 0, callback)
 					} else {
 						callback.reply("deeerp!");
