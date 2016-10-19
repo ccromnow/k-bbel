@@ -142,7 +142,7 @@ module.exports = function () {
 			.end(function (result) {
 				if (result.status == 202) {
 					if (typeof result.body.status_url !== 'undefined') {
-						callback.reply(response.body.status_url);
+						callback.reply(result.body.status_url);
 					} else {
 						callback.reply("deeerp!");
 					}
