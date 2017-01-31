@@ -75,7 +75,7 @@ module.exports = function() {
 		.header("X-Mashape-Key", process.env.MASHAPE_KEY)
 		.header("Accept", "application/json")
 		.end(function (result) {
-			return handleRespone(result, message);
+			userCommand.respond(handleRespone(result, message));
 		});
 	}
 
