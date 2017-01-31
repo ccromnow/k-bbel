@@ -1,5 +1,6 @@
 module.exports = function() {
 	var module = {};
+	var userCommand = null;
 	var unirest = require('unirest');
 	var moment = require('moment');
 	var querystring = require('querystring');
@@ -46,7 +47,21 @@ module.exports = function() {
     	return 'The game: '+data[0].name+'. '+release;
     }
 
-	module.run = function *(message) {
+	module.setCommand = function(command) {
+		userCommand = command;
+	}
+
+	module.help = function() {
+		var helptext = 'Get game info, type: !gameinfo {gamename}';
+		userCommand.respond(helptext);
+	}
+
+	module.run = function() {
+		if (!userCommand) {
+			return;
+		}
+
+		var message = userCommand.getQuery();
 		
 		var query = {
 			fields: '*',
